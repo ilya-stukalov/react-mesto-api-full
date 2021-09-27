@@ -1,0 +1,6 @@
+.header__user-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    
+}

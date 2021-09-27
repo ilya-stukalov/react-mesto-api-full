@@ -1,0 +1,19 @@
+
+.profile__container-text {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto;
+  margin-left: 30px;
+  gap: 16px 18px;
+  position: relative;
+  max-width: 336px;
+}
+
+@media screen and (max-width: 779px) {
+	.profile__container-text  {
+    margin-left: 0;
+    gap: 0;
+    max-width: 282px;
+    margin-bottom: 36px;
+	}
+}

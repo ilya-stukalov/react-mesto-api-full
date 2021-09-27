@@ -1,0 +1,7 @@
+
+.form__container {
+  width: 83.25%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}

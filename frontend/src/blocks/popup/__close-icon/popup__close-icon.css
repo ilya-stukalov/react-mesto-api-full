@@ -1,0 +1,34 @@
+.popup__close-icon {
+  align-self:flex-end;
+  width: 40px;
+  height: 40px;
+  background-image: url('../../../images/close_icon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgba(0, 0, 0, 1);
+  border: 0;
+}
+
+
+
+@media screen and (min-width: 779px) {
+	.popup__close-icon {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+	}
+}
+@media screen and (max-width: 779px) {
+	.popup__close-icon {
+    margin-bottom: 13.65px;
+    width: 26px;
+    height: 26px;
+	}
+}
+
+
+.popup__close-icon:hover {
+  opacity: 0.6;
+  transition: 2s;
+  cursor: pointer;
+}
