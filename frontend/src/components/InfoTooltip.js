@@ -3,8 +3,6 @@ import success from '../images/success.png';
 import failed from '../images/failed.png';
 import { useHistory } from 'react-router-dom';
 
-
-
 function InfoTooltip({ isOpen, onClose, isSignUpSuccess, name }) {
   const history = useHistory();
 

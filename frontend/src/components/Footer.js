@@ -1,7 +1,6 @@
 import React from 'react';
+
 function Footer(props) {
-
-
   if (props.loggedIn) {
     return (
 

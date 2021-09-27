@@ -15,7 +15,7 @@ import ProtectedRoute from './ProtectedRoute.js';
 import Register from './Register';
 import Login from './Login';
 import { useHistory } from 'react-router-dom';
-import * as auth from './Auth.js';
+import * as auth from '../utils/Auth.js';
 import InfoTooltip from './InfoTooltip';
 
 function App() {
@@ -130,7 +130,6 @@ function App() {
     api.insertNewCard(data)
       .then((newCard) => {
         setCards([newCard, ...cards]);
-        closeAllPopups();
       })
       .then(() => {
         closeAllPopups();
@@ -158,14 +157,17 @@ function App() {
           setEmail(user.data.email);
           setLoggedIn(true);
           history.push('/');
-        });
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     }
   }
 
   function handleRegistration(values) {
     auth.register(values)
       .then((data) => {
-     /*    localStorage.setItem('user', JSON.stringify(data)); */
+        /*    localStorage.setItem('user', JSON.stringify(data)); */
         handleInfoTooltip(true);
         history.push('/sign-in');
       })
@@ -185,12 +187,13 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        handleInfoTooltip(false);})
+        handleInfoTooltip(false);
+      })
   }
 
   useEffect(() => {
     tokenCheck();
-  }, [tokenCheck]);
+  }, []);
 
   function handleInfoTooltip(success) {
     if (success) {

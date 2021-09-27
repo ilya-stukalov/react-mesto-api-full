@@ -1,9 +1,7 @@
 import React from 'react';
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-
-
-import { useFormValidation } from './useFormValidation';
+import { useFormValidation } from './hooks/useFormValidation.js';
 
 function EditProfilePopup({ onUpdateUser, onClose, isOpen }) {
 
