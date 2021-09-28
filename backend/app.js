@@ -1,5 +1,9 @@
 const express = require('express');
 
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+
+const NotFoundError = require('./errors/not-found-error');
+
 const rateLimit = require('express-rate-limit');
 
 const app = express();
@@ -43,6 +47,8 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 
+app.use(requestLogger);
+
 app.post('/signup',
   celebrate({
     body: Joi.object().keys({
@@ -71,7 +77,14 @@ app.use('/', require('./routes/cards'));
 
 app.use('*', require('./routes/otherRoutes'));
 
+// app.all('*', () => {
+//   throw new NotFoundError('Запрашиваемый ресурс не найден');
+// });
+
+
 mongoose.connect('mongodb://localhost:27017/mestodb');
+
+app.use(errorLogger);
 
 app.use(errors());
 
