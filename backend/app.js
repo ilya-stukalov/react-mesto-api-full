@@ -25,6 +25,16 @@ app.use(helmet());
 
 const mongoose = require('mongoose');
 
+const allowedCors = [
+  'http://api.mesto-stukalov.nomoredomains.club',
+  'https://mesto-stukalov.nomoredomains.club',
+  'http://localhost:3000',
+];
+
+app.use(cors({
+  origin: allowedCors,
+}));
+
 const { PORT = 3001 } = process.env;
 
 const bodyParser = require('body-parser');
