@@ -39,14 +39,15 @@ function Main({ cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onC
         </button>
       </section>
       <div className="elements">
-        {cards.map((item) => (
+          {cards.map((item) => (
           <Card
             key={item._id}
             card={item}
             onCardClick={onCardClick}
             onCardLike={onCardLike}
             onCardDelete={onCardDelete}
-          />)
+          />
+          )
         )}
       </div>
     </main>

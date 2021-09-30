@@ -1,10 +1,10 @@
-export const BASE_URL = 'https://auth.nomoreparties.co';
-
+// export const BASE_URL = 'http://api.mesto-stukalov.nomoredomains.club';
+export const BASE_URL = 'http://api.mesto-stukalov.nomoredomains.club';
 function _checkResponse(res) {
   if (!res.ok) {
     return Promise.reject(`Error: ${res.status}`);
   }
-  return res.json();
+  return res;
 }
 
 export const register = (values) => {
@@ -24,6 +24,7 @@ export const register = (values) => {
 export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
+    credentials: 'include',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
@@ -32,13 +33,13 @@ export const authorize = (email, password) => {
   }).then(_checkResponse);
 }
 
-export const getContent = (token) => {
+export const getContent = (id) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
+    credentials: 'include',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
     }
   }).then(_checkResponse);
 }

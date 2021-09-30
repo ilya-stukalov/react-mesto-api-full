@@ -2,7 +2,6 @@ class Api {
   constructor(options) {
     this._options = options;
     this._baseUrl = options.baseUrl;
-    this._headerAuthorization = options.headers.authorization;
     this._contentType = options.headers['Content-Type'];
   }
 
@@ -16,8 +15,8 @@ class Api {
   getInitialCards() {
     return fetch(`${this._baseUrl}cards`, {
       method: 'GET',
+      credentials: 'include',
       headers: {
-        authorization: this._headerAuthorization,
         'Content-Type': this._contentType
       }
     })
@@ -28,8 +27,8 @@ class Api {
   getUserInfo() {
     return fetch(`${this._baseUrl}users/me`, {
       method: 'GET',
+      credentials: 'include',
       headers: {
-        authorization: this._headerAuthorization,
         'Content-Type': this._contentType
       }
     })
@@ -37,10 +36,10 @@ class Api {
   }
 
   setUserInfo(data) {
-    return fetch(`${this._baseUrl}users/me`, {
+    return fetch(`${this._baseUrl}users/me/`, {
       method: 'PATCH',
+      credentials: 'include',
       headers: {
-        authorization: this._headerAuthorization,
         'Content-Type': this._contentType
       },
       body: JSON.stringify({
@@ -54,13 +53,13 @@ class Api {
   insertNewCard(data) {
     return fetch(`${this._baseUrl}cards`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
-        authorization: this._headerAuthorization,
         'Content-Type': this._contentType
       },
       body: JSON.stringify({
         name: data.name,
-        link: data.link
+        link: data.link,
       })
     })
       .then(this._checkResponse);
@@ -74,13 +73,11 @@ class Api {
     }
   }
 
-
-
   putLike(id) {
-    return fetch(`${this._baseUrl}cards/likes/${id}`, {
+    return fetch(`${this._baseUrl}cards/${id}/likes`, {
       method: 'PUT',
+      credentials: 'include',
       headers: {
-        authorization: this._headerAuthorization,
         'Content-Type': this._contentType
       }
     })
@@ -88,10 +85,10 @@ class Api {
   }
 
   deleteLike(id) {
-    return fetch(`${this._baseUrl}cards/likes/${id}`, {
+    return fetch(`${this._baseUrl}cards/${id}/likes`, {
       method: 'DELETE',
+      credentials: 'include',
       headers: {
-        authorization: this._headerAuthorization,
         'Content-Type': this._contentType
       }
     })
@@ -101,8 +98,8 @@ class Api {
   updateAvatar(data) {
     return fetch(`${this._baseUrl}users/me/avatar`, {
       method: 'PATCH',
+      credentials: 'include',
       headers: {
-        authorization: this._headerAuthorization,
         'Content-Type': this._contentType
       },
       body: JSON.stringify({
@@ -115,21 +112,30 @@ class Api {
   deleteCard(id) {
     return fetch(`${this._baseUrl}cards/${id}`, {
       method: 'DELETE',
+      credentials: 'include',
       headers: {
-        authorization: this._headerAuthorization,
         'Content-Type': this._contentType
       }
-
+    })
+      .then(this._checkResponse);
+  }
+  deleteCookies() {
+    return fetch(`${this._baseUrl}logout`, {
+      method: '' +
+        'GET',
+      credentials: 'include',
+      headers: {
+        'Content-Type': this._contentType
+      }
     })
       .then(this._checkResponse);
   }
 }
 
-
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-25/',
+  baseUrl: 'http://api.mesto-stukalov.nomoredomains.club/',
+  credentials: 'include',
   headers: {
-    authorization: 'bbfa3ff1-62aa-4f58-bfbd-0546f73cf56a',
     'Content-Type': 'application/json'
   }
 });

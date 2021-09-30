@@ -18,6 +18,7 @@ import { useHistory } from 'react-router-dom';
 import * as auth from '../utils/Auth.js';
 import InfoTooltip from './InfoTooltip';
 
+
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
@@ -33,19 +34,20 @@ function App() {
   const history = useHistory();
 
   useEffect(() => {
+    if (loggedIn) {
     Promise.all([
       api.getUserInfo(),
       api.getInitialCards()
     ])
       .then((values) => {
         setCurrentUser(values[0]);
-        setCards(values[1]);
-
+        setCards(values[1].data);
       })
       .catch((err) => {
         console.log(err);
       })
-  }, []);
+    }
+  }, [loggedIn]);
 
   function handleCardClick(card) {
     setIsImagePopupOpen(true);
@@ -75,7 +77,7 @@ function App() {
   function handleUpdateUser(data) {
     api.setUserInfo(data)
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser(res.data);
       })
       .then(() => {
         closeAllPopups();
@@ -88,7 +90,7 @@ function App() {
   function handleUpdateAvatar(data) {
     api.updateAvatar(data)
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser(res.data);
       })
       .then(() => {
         closeAllPopups();
@@ -102,9 +104,10 @@ function App() {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api.changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
+        console.log(newCard);
         setCards((state) =>
           state.map((c) =>
-            c._id === card._id ? newCard : c)
+            c._id === card._id ? newCard.card : c)
         );
       })
       .catch((err) => {
@@ -140,34 +143,34 @@ function App() {
   }
 
   function signOut() {
-    localStorage.removeItem('jwt');
-    localStorage.removeItem('user');
-    history.push('/sign-in');
     setEmail('');
     setLoggedIn(false);
+    api.deleteCookies();
+    localStorage.removeItem('user');
+    history.push('/sign-in');
   }
 
   function tokenCheck() {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      auth.getContent(jwt)
+      auth.getContent()
         .then((res) => {
-          localStorage.setItem('user', JSON.stringify(res));
-          const user = JSON.parse(localStorage.getItem('user'));
-          setEmail(user.data.email);
-          setLoggedIn(true);
-          history.push('/');
+         return  res.json() })
+        .then((res) => {
+            localStorage.setItem('user', JSON.stringify(res));
+            const user = JSON.parse(localStorage.getItem('user'));
+            setEmail(user.email);
+            setCurrentUser(user);
+            setLoggedIn(true);
+            history.push('/');
         })
         .catch((err) => {
           console.log(err);
         })
-    }
   }
 
   function handleRegistration(values) {
     auth.register(values)
       .then((data) => {
-        /*    localStorage.setItem('user', JSON.stringify(data)); */
+        localStorage.setItem('user', JSON.stringify(data));
         handleInfoTooltip(true);
         history.push('/sign-in');
       })
@@ -180,9 +183,8 @@ function App() {
   function handleLogin(values) {
     auth.authorize(values.email, values.password)
       .then((res) => {
-        if (res.token) {
-          localStorage.setItem('jwt', res.token);
-          tokenCheck(res.token);
+        if (res) {
+          tokenCheck();
         }
       })
       .catch((err) => {

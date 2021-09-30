@@ -1,5 +1,7 @@
 const express = require('express');
 
+require('dotenv').config();
+
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const NotFoundError = require('./errors/not-found-error');
@@ -31,10 +33,12 @@ const allowedCors = [
   'http://api.mesto-stukalov.nomoredomains.club',
   'https://mesto-stukalov.nomoredomains.club',
   'http://localhost:3000',
+  'http://localhost:3001',
 ];
 
 app.use(cors({
   origin: allowedCors,
+  credentials: true,
 }));
 
 const { PORT = 3001 } = process.env;
@@ -86,6 +90,13 @@ app.use(auth);
 app.use('/', require('./routes/users'));
 
 app.use('/', require('./routes/cards'));
+
+app.get("/logout", (req, res) => {
+  return res
+    .clearCookie("jwt")
+    .status(200)
+    .json({ message: "Successfully logged out 😏 🍀" });
+});
 
 app.use('*', require('./routes/otherRoutes'));
 
