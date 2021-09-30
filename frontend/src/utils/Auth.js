@@ -1,5 +1,4 @@
-// export const BASE_URL = 'http://api.mesto-stukalov.nomoredomains.club';
-export const BASE_URL = 'http://api.mesto-stukalov.nomoredomains.club';
+export const BASE_URL = 'https://api.mesto-stukalov.nomoredomains.club';
 function _checkResponse(res) {
   if (!res.ok) {
     return Promise.reject(`Error: ${res.status}`);

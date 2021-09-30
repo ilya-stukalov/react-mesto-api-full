@@ -133,7 +133,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'http://api.mesto-stukalov.nomoredomains.club/',
+  baseUrl: 'https://api.mesto-stukalov.nomoredomains.club/',
   credentials: 'include',
   headers: {
     'Content-Type': 'application/json'
