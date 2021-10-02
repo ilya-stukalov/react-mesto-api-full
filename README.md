@@ -4,3 +4,4 @@
 Адреса:
 1) url: https://mesto-stukalov.nomoredomains.club
 2) api: https://api.mesto-stukalov.nomoredomains.club
+3) ip: 62.84.118.90
