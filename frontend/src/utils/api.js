@@ -1,3 +1,5 @@
+import { BASE_URL } from './utils';
+
 class Api {
   constructor(options) {
     this._options = options;
@@ -13,7 +15,7 @@ class Api {
   }
 
   getInitialCards() {
-    return fetch(`${this._baseUrl}cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -25,7 +27,7 @@ class Api {
 
 
   getUserInfo() {
-    return fetch(`${this._baseUrl}users/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       credentials: 'include',
       headers: {
@@ -36,7 +38,7 @@ class Api {
   }
 
   setUserInfo(data) {
-    return fetch(`${this._baseUrl}users/me/`, {
+    return fetch(`${this._baseUrl}/users/me/`, {
       method: 'PATCH',
       credentials: 'include',
       headers: {
@@ -51,7 +53,7 @@ class Api {
   }
 
   insertNewCard(data) {
-    return fetch(`${this._baseUrl}cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -74,7 +76,7 @@ class Api {
   }
 
   putLike(id) {
-    return fetch(`${this._baseUrl}cards/${id}/likes`, {
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'PUT',
       credentials: 'include',
       headers: {
@@ -85,7 +87,7 @@ class Api {
   }
 
   deleteLike(id) {
-    return fetch(`${this._baseUrl}cards/${id}/likes`, {
+    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
       method: 'DELETE',
       credentials: 'include',
       headers: {
@@ -96,7 +98,7 @@ class Api {
   }
 
   updateAvatar(data) {
-    return fetch(`${this._baseUrl}users/me/avatar`, {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       credentials: 'include',
       headers: {
@@ -110,7 +112,7 @@ class Api {
   }
 
   deleteCard(id) {
-    return fetch(`${this._baseUrl}cards/${id}`, {
+    return fetch(`${this._baseUrl}/cards/${id}`, {
       method: 'DELETE',
       credentials: 'include',
       headers: {
@@ -120,7 +122,7 @@ class Api {
       .then(this._checkResponse);
   }
   deleteCookies() {
-    return fetch(`${this._baseUrl}logout`, {
+    return fetch(`${this._baseUrl}/logout`, {
       method: '' +
         'GET',
       credentials: 'include',
@@ -133,7 +135,7 @@ class Api {
 }
 
 const api = new Api({
-  baseUrl: 'https://api.mesto-stukalov.nomoredomains.club/',
+  baseUrl: BASE_URL,
   credentials: 'include',
   headers: {
     'Content-Type': 'application/json'

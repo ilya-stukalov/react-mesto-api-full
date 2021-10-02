@@ -1,4 +1,5 @@
-export const BASE_URL = 'https://api.mesto-stukalov.nomoredomains.club';
+import { BASE_URL } from './utils';
+
 function _checkResponse(res) {
   if (!res.ok) {
     return Promise.reject(`Error: ${res.status}`);
