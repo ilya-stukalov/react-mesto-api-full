@@ -4,11 +4,12 @@
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  
+
 }
 
 @media screen and (max-width: 779px) {
   .header__container {
     width: 90%;
+    flex-direction: column;
   }
 }

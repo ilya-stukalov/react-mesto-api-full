@@ -2,10 +2,6 @@ const express = require('express');
 
 require('dotenv').config();
 
-const { requestLogger, errorLogger } = require('./middlewares/logger');
-
-const NotFoundError = require('./errors/not-found-error');
-
 const rateLimit = require('express-rate-limit');
 
 const app = express();
@@ -50,6 +46,8 @@ const {
   Joi,
   errors,
 } = require('celebrate');
+
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const auth = require('./middlewares/auth');
 
@@ -97,19 +95,12 @@ app.use('/', require('./routes/users'));
 
 app.use('/', require('./routes/cards'));
 
-app.get("/logout", (req, res) => {
-  return res
-    .clearCookie("jwt")
-    .status(200)
-    .json({ message: "Successfully logged out 😏 🍀" });
-});
+app.get('/logout', (req, res) => res
+  .clearCookie('jwt')
+  .status(200)
+  .json({ message: 'Successfully logged out 😏 🍀' }));
 
 app.use('*', require('./routes/otherRoutes'));
-
-// app.all('*', () => {
-//   throw new NotFoundError('Запрашиваемый ресурс не найден');
-// });
-
 
 mongoose.connect('mongodb://localhost:27017/mestodb');
 

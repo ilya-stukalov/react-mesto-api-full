@@ -30,9 +30,8 @@ module.exports.createCard = (req, res, next) => {
     link,
     owner: req.user._id,
   })
-    .then(card => card.populate('owner'))
-    .then((card) =>
-      res
+    .then((card) => card.populate('owner'))
+    .then((card) => res
       .status(STATUS_OK)
       .send(card))
     .catch((err) => {
@@ -69,12 +68,15 @@ module.exports.likeCard = (req, res, next) => Card.findByIdAndUpdate(
   { $addToSet: { likes: req.user._id } },
   { new: true },
 )
-  .then(card => card.populate('owner'))
-  .then(card => card.populate('likes'))
   .then((card) => {
     if (!card) {
       throw new NotFoundError('Нет карточки с таким id');
     }
+    return card;
+  })
+  .then((card) => card.populate('owner'))
+  .then((card) => card.populate('likes'))
+  .then((card) => {
     res.status(STATUS_OK)
       .send({ card });
   })
@@ -85,12 +87,15 @@ module.exports.dislikeCard = (req, res, next) => Card.findByIdAndUpdate(
   { $pull: { likes: req.user._id } },
   { new: true },
 )
-  .then(card => card.populate('owner'))
-  .then(card => card.populate('likes'))
   .then((card) => {
     if (!card) {
       throw new NotFoundError('Нет карточки с таким id');
     }
+    return card;
+  })
+  .then((card) => card.populate('owner'))
+  .then((card) => card.populate('likes'))
+  .then((card) => {
     res.status(STATUS_OK)
       .send({ card });
   })

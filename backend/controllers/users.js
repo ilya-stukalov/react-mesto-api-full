@@ -141,7 +141,7 @@ module.exports.login = (req, res, next) => {
           httpOnly: true,
         })
         .status(STATUS_OK)
-        .send('Авторизация успешна!');
+        .send({ message: 'Авторизация успешна!' });
     })
     .catch((err) => {
       throw new NotAuthError(err.message);

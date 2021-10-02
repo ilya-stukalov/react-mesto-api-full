@@ -18,8 +18,7 @@
 	.profile__name {
     font-size: 27px;
     line-height: 33px;
-    text-align: center;
-    align-self: center;
+    text-align: left;
     width: 189px;
     margin-bottom: 14px;
 	}
